@@ -3,8 +3,10 @@
 #include <NTPClient.h>
 
 
-int HOURS_PINS[5] = {16, 5, 4, 0, 2};
-int MINUTES_PINS[6] = {14, 12, 13, 15, 3, 1};
+int HOURS_PINS[5] = {2, 0, 4, 5, 16};
+//int HOURS_PINS[5] = {16, 5, 4, 0, 2};
+int MINUTES_PINS[6] = {1, 3, 15, 13, 12, 14};
+//int MINUTES_PINS[6] = {14, 12, 13, 15, 3, 1};
 
 int HOURS = 0;
 int MINUTES = 0;
