@@ -12,9 +12,6 @@ const char *password = PW;
 //#define SSID "Wireless Access Point"
 //#define PW "Password"
 TM1637Display display = TM1637Display(CLK, DIO); // Create display object of type TM1637Display:
-const int analogInPin = A0;  // ESP8266 Analog Pin ADC0 = A0
-int sensorValue = 0;  // value read from the pot
-
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "asia.pool.ntp.org", 28800, 60000);
 
@@ -91,6 +88,7 @@ String relayState(int numRelay){
 }
 void setup(){
   Serial.begin(115200);
+  pinMode(D4, OUTPUT);
   for(int i=1; i<=NUM_RELAYS; i++){
     pinMode(relayGPIOs[i-1], OUTPUT);
     if(RELAY_NO){
@@ -157,26 +155,19 @@ void setup(){
 }
 
 void loop(){
+  digitalWrite(D4, HIGH);
   timeClient.update();
   Serial.println(timeClient.getFormattedTime());
   Serial.println(WiFi.localIP());
-  sensorValue = analogRead(analogInPin);
-  Serial.println(sensorValue);
   lcd.setCursor(0, 0);
-  lcd.print(sensorValue);
-  lcd.setCursor(8, 0);
-  lcd.print(timeClient.getFormattedTime());
+  lcd.print("Local IP Address");
   lcd.setCursor(0,1);
   lcd.print(WiFi.localIP());
   delay(500);
-int A, B;
-
-  timeClient.update();
+  int A, B;
   display.setBrightness(7); // Set the brightness:
-
   A = timeClient.getHours() * 100 + timeClient.getMinutes();
   B = timeClient.getSeconds();
-
   if ((B % 2) == 0)
   {
     display.showNumberDecEx(A, 0b01000000, false, 4, 0);
@@ -185,4 +176,5 @@ int A, B;
   {
     display.showNumberDecEx(A, 0b00000000, false, 4, 0);
   }
+  digitalWrite(D4, LOW);
 }
