@@ -2,9 +2,14 @@
 #include <ESP8266WiFi.h>
 #include <NTPClient.h>
 #include <WiFiUdp.h>
+#include <TM1637Display.h>
 #include "WAC.h"
 const char *ssid = SSID;
 const char *password = PW;
+#define CLK D4 
+#define DIO D3
+
+TM1637Display display = TM1637Display(CLK, DIO); // Create display object of type TM1637Display:
 //Create WAC.h to store creds
 //#define SSID "Wireless Access Point"
 //#define PW "Password"
@@ -18,6 +23,7 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 void setup(){
   Serial.begin(115200);
+  display.clear();
   lcd.init();                   
   lcd.backlight();
   lcd.print("System Armed");
@@ -50,4 +56,20 @@ void loop(){
   lcd.setCursor(0,1);
   lcd.print(WiFi.localIP());
   delay(500);
+int A, B;
+
+  timeClient.update();
+  display.setBrightness(7); // Set the brightness:
+
+  A = timeClient.getHours() * 100 + timeClient.getMinutes();
+  B = timeClient.getSeconds();
+
+  if ((B % 2) == 0)
+  {
+    display.showNumberDecEx(A, 0b01000000, false, 4, 0);
+  }
+  else
+  {
+    display.showNumberDecEx(A, 0b00000000, false, 4, 0);
+  }
 }
