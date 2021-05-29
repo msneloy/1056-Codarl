@@ -18,30 +18,30 @@ TM1637Display display = TM1637Display(CLK, DIO); // Create display object of typ
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "asia.pool.ntp.org", 28800, 60000);
 
-LiquidCrystal_I2C lcd(0x27, 16, 2);  
-const char* PARAM_INPUT_1 = "relay";  
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+const char* PARAM_INPUT_1 = "relay";
 const char* PARAM_INPUT_2 = "state";
 // Create AsyncWebServer object on port 80
 AsyncWebServer server(80);
 
 
-void setup(){
+void setup() {
   Serial.begin(115200);
   pinMode(D4, OUTPUT);
-  for(int i=1; i<=NUM_RELAYS; i++){
-    pinMode(relayGPIOs[i-1], OUTPUT);
-    if(RELAY_NO){
-      digitalWrite(relayGPIOs[i-1], HIGH);
+  for (int i = 1; i <= NUM_RELAYS; i++) {
+    pinMode(relayGPIOs[i - 1], OUTPUT);
+    if (RELAY_NO) {
+      digitalWrite(relayGPIOs[i - 1], HIGH);
     }
-    else{
-      digitalWrite(relayGPIOs[i-1], LOW);
+    else {
+      digitalWrite(relayGPIOs[i - 1], LOW);
     }
   }
   display.clear();
-  lcd.init();                   
+  lcd.init();
   lcd.backlight();
   lcd.print("System Armed");
-  lcd.clear();     
+  lcd.clear();
   Serial.print("Connecting to ");
   Serial.println(ssid);
   WiFi.begin(ssid, password);
@@ -49,18 +49,18 @@ void setup(){
     delay(500);
     lcd.setCursor(0, 0);
     lcd.print("Connecting to");
-    lcd.setCursor(0, 1); 
-    lcd.print(ssid); 
+    lcd.setCursor(0, 1);
+    lcd.print(ssid);
     Serial.print(".");
   }
   Serial.println(WiFi.localIP());
   // Route for root / web page
-  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest * request) {
     request->send_P(200, "text/html", index_html, processor);
   });
 
   // Send a GET request to <ESP_IP>/update?relay=<inputMessage>&state=<inputMessage2>
-  server.on("/update", HTTP_GET, [] (AsyncWebServerRequest *request) {
+  server.on("/update", HTTP_GET, [] (AsyncWebServerRequest * request) {
     String inputMessage;
     String inputParam;
     String inputMessage2;
@@ -71,13 +71,13 @@ void setup(){
       inputParam = PARAM_INPUT_1;
       inputMessage2 = request->getParam(PARAM_INPUT_2)->value();
       inputParam2 = PARAM_INPUT_2;
-      if(RELAY_NO){
+      if (RELAY_NO) {
         Serial.print("NO ");
-        digitalWrite(relayGPIOs[inputMessage.toInt()-1], !inputMessage2.toInt());
+        digitalWrite(relayGPIOs[inputMessage.toInt() - 1], !inputMessage2.toInt());
       }
-      else{
+      else {
         Serial.print("NC ");
-        digitalWrite(relayGPIOs[inputMessage.toInt()-1], inputMessage2.toInt());
+        digitalWrite(relayGPIOs[inputMessage.toInt() - 1], inputMessage2.toInt());
       }
     }
     else {
@@ -93,14 +93,14 @@ void setup(){
   lcd.clear();
 }
 
-void loop(){
+void loop() {
   digitalWrite(D4, HIGH);
   timeClient.update();
   Serial.println(timeClient.getFormattedTime());
   Serial.println(WiFi.localIP());
   lcd.setCursor(0, 0);
   lcd.print("Local IP Address");
-  lcd.setCursor(0,1);
+  lcd.setCursor(0, 1);
   lcd.print(WiFi.localIP());
   delay(500);
   int A, B;
