@@ -1,4 +1,4 @@
-#define CLK D0 
+#define CLK D0
 #define DIO D5
 #define RELAY_NO    true
 // Set number of relays
