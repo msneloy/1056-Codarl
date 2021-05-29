@@ -1,6 +1,6 @@
-String relayState(int numRelay){
-  if(RELAY_NO){
-    if(digitalRead(relayGPIOs[numRelay-1])){
+String relayState(int numRelay) {
+  if (RELAY_NO) {
+    if (digitalRead(relayGPIOs[numRelay - 1])) {
       return "";
     }
     else {
@@ -8,7 +8,7 @@ String relayState(int numRelay){
     }
   }
   else {
-    if(digitalRead(relayGPIOs[numRelay-1])){
+    if (digitalRead(relayGPIOs[numRelay - 1])) {
       return "checked";
     }
     else {
