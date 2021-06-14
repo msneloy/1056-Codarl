@@ -63,6 +63,7 @@ void setup() {
   wifiManager.autoConnect("AutoConnectAP");
   Serial.println("Connected.");
   server.begin();
+  lcd.clear();
 }
 
 void loop() {
@@ -147,10 +148,11 @@ void loop() {
               output4State = "off";
               digitalWrite(output4, LOW);
             }
+
             client.println("<!DOCTYPE html><html>");
             client.println("<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
             client.println("<link rel=\"icon\" href=\"data:,\">");
-            client.println("<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}");
+            client.println("<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center; background: firebrick;}");
             client.println(".button { background-color: green; border: none; color: white; padding: 16px 40px;");
             client.println("text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}");
             client.println(".button2 {background-color: red;}</style></head>");
