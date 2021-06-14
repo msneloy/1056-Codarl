@@ -99,7 +99,7 @@ void loop() {
   Serial.println(timeClient.getFormattedTime());
   Serial.println(WiFi.localIP());
   lcd.setCursor(0, 0);
-  lcd.print("Local IP Address");
+  lcd.print(ssid);
   lcd.setCursor(0, 1);
   lcd.print(WiFi.localIP());
   delay(500);
