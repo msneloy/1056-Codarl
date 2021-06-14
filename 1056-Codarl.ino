@@ -14,6 +14,7 @@ const char *password = PW;
 //Create WAC.h to store creds
 //#define SSID "Wireless Access Point"
 //#define PW "Password"
+String newHostname = "1056 Codarl";
 TM1637Display display = TM1637Display(CLK, DIO); // Create display object of type TM1637Display:
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "asia.pool.ntp.org", 28800, 60000);
@@ -44,6 +45,12 @@ void setup() {
   lcd.clear();
   Serial.print("Connecting to ");
   Serial.println(ssid);
+    //Get Current Hostname
+  Serial.printf("Default hostname: %s\n", WiFi.hostname().c_str());
+  //Set new hostname
+  WiFi.hostname(newHostname.c_str());
+  //Get Current Hostname
+  Serial.printf("New hostname: %s\n", WiFi.hostname().c_str());
   WiFi.begin(ssid, password);
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
