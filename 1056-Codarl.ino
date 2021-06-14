@@ -280,35 +280,35 @@ void loop() {
             client.println("text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}");
             client.println(".button2 {background-color: red;}</style></head>");
             client.println("<body><h1>Prototype 420.69</h1>");
-            
+
             client.println("<p>Relay One | Status : " + output1State + "</p>");
             if (output1State == "off") {
               client.println("<p><a href=\"/1/on\"><button class=\"button\">Turn ON</button></a></p>");
             } else {
               client.println("<p><a href=\"/1/off\"><button class=\"button button2\">Turn OFF</button></a></p>");
             }
-            
+
             client.println("<p>Relay Two | Status : " + output2State + "</p>");
             if (output2State == "off") {
               client.println("<p><a href=\"/2/on\"><button class=\"button\">Turn ON</button></a></p>");
             } else {
               client.println("<p><a href=\"/2/off\"><button class=\"button button2\">Turn OFF</button></a></p>");
             }
-            
+
             client.println("<p>Relay Three | Status : " + output3State + "</p>");
             if (output3State == "off") {
               client.println("<p><a href=\"/3/on\"><button class=\"button\">Turn ON</button></a></p>");
             } else {
               client.println("<p><a href=\"/3/off\"><button class=\"button button2\">Turn OFF</button></a></p>");
             }
-            
+
             client.println("<p>Relay Four | Status : " + output4State + "</p>");
             if (output4State == "off") {
               client.println("<p><a href=\"/4/on\"><button class=\"button\">Turn ON</button></a></p>");
             } else {
               client.println("<p><a href=\"/4/off\"><button class=\"button button2\">Turn OFF</button></a></p>");
             }
-            
+
             client.println("</body></html>");
             client.println();
             break;
